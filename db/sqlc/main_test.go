@@ -3,18 +3,19 @@ package db
 import (
 	"database/sql"
 	"log"
-	"os"
 	"testing"
+
+	_ "github.com/lib/pq"
 )
 
 const (
 	dbdriver = "postgres"
-	dbsource = "postgresql://root:secret@localhost:5432/simple_bank?sslmode=disable"
+	dbsource = "postgresql://root:secret@localhost:5433/simplebank?sslmode=disable"
 )
 
 var testQueries *Queries
 
-func testMain(m *testing.M) {
+func Test_Main(m *testing.T) {
 	conn, err := sql.Open(dbdriver, dbsource)
 
 	if err != nil {
@@ -22,5 +23,4 @@ func testMain(m *testing.M) {
 	}
 
 	testQueries = New(conn)
-	os.Exit(m.Run())
 }
